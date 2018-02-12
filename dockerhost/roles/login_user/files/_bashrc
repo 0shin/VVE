@@ -1,0 +1,54 @@
+PS1="\`if [ \$? = 0 ]; then echo \[\e[35m\]O_O\[\e[0m\]; else echo \[\e[35m\]X_X\[\e[0m\]; fi\`[\[\e[0;31m\]\u\e[0;32m\]@\e[0;36m\]\h\[\e[m\] \[\e[1;34m\]\w\[\e[m\] \[\e[1;32m\]] \e[35m\]\$\[\e[m\] "
+
+alias ls='ls --color'
+alias ll='ls -l --color -F'
+alias la='ls -la --color -F'
+
+export EDITOR="/usr/bin/vim"
+export LANG='ja_JP.UTF-8'
+export LC_ALL='ja_JP.UTF-8'
+export LC_MESSAGES='ja_JP.UTF-8'
+export PATH=$PATH:$HOME/local/bin/
+
+# histroy
+function share_history {  
+    history -a             
+    history -c            
+    history -r            
+}
+PROMPT_COMMAND='share_history'             
+shopt -u histappend                       
+export HISTTIMEFORMAT='%Y/%m/%d %H:%M:%S ' 
+export HISTSIZE=9999                       
+
+# pbcopy for all os type
+case ${OSTYPE} in
+    darwin*)
+        :
+        ;;
+    cygwin*)
+        alias pbcopy='cat >/dev/clipboard'
+        alias pbpaste='cat /dev/clipboard'
+        ;;
+    *)
+        alias pbpaste='xsel -b'
+        alias pbcopy='xsel -b'
+        ;;
+esac
+
+# sudo for cygwin
+case ${OSTYPE} in
+    cygwin*)
+        if [[ -n "$PS1" ]]; then
+                __sudo_cygwin() {
+                        local executable=$(which "${1:-cmd}")
+                        shift
+                        /usr/bin/cygstart --action=runas "$executable" "$@"
+                }
+
+                if [[ -x "/usr/bin/cygstart" ]]; then
+                        alias sudo=__sudo_cygwin
+                fi
+        fi
+        ;;
+esac

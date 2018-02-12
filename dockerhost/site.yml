@@ -4,5 +4,6 @@
   user: "{{ansible_user}}"
   roles:
     - common
-#    - login_user
-
+    - login_user
+    - dockerhost
+    

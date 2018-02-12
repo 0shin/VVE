@@ -1,0 +1,23 @@
+---
+
+ - name: add apt source list to /etc/apt/sources.list 
+   lineinfile:
+     dest='/etc/apt/sources.list'
+     state=present
+     line="deb http://ftp.jp.debian.org/debian/ sid main"
+
+ - name: add apt source list to /etc/apt/sources.list 
+   lineinfile:
+     dest='/etc/apt/sources.list'
+     state=present
+     line="deb-src http://ftp.jp.debian.org/debian/ sid main"
+
+ - name: apt-get update
+   apt: update_cache=yes upgrade=no
+
+ - name: install docker host package
+   apt: name={{ item }} state=present
+   with_items:
+      - docker.io
+
+

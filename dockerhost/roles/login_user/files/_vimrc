@@ -1,0 +1,101 @@
+" initialize command
+" mkdir -p ~/.vim/{swap,backup,colors,vim/dein/repos/github.com/Shougo/dein.vim}
+" git clone https://github.com/Shougo/dein.vim.git ~/.vim/dein/repos/github.com/Shougo/dein.vim
+" wget https://raw.githubusercontent.com/tomasr/molokai/master/colors/molokai.vim  -O ~/.vim/colors/molokai.vim
+
+" systan on
+syntax on
+"カラースキーマ設定
+colorscheme molokai
+"vi互換モードをオフ(vimの拡張機能を有効)
+set nocompatible
+"バッファを保存しなくても他のバッファを表示できるようにする
+set hidden
+"コマンドライン保管を便利に
+set wildmenu
+"タイプ途中のコマンドを画面最下行に表示
+set showcmd
+"検索語を強調表示
+set hlsearch
+"検索時に大文字・小文字を区別しない。
+set ignorecase
+"ただし検索語に大文字、小文字が混在しているときは区別する
+set smartcase
+"オートインデント、改行、インサートモード開始直後にバックスペースキーで削除できるよう
+set backspace=indent,eol,start
+"オートインデントを有効にする
+set autoindent
+" 移動コマンドを使ったとき、行頭に移動しない
+set nostartofline
+" 画面最下行にルーラーを表示する
+set ruler
+" ステータスラインを常に表示する
+set laststatus=2
+" ステータスライン
+set statusline=%<%f\ %m%r%h%w%y%{'['.(&fenc!=''?&fenc:&enc).']['.&ff.']'}%=%4v\%l/%L
+"バッファが変更されているとき、コマンドをエラーにするのではなく保存する
+set confirm
+"ビープの変わりにヴィジュアルベルを使う
+set visualbell
+"そしてヴィジュアルベルも無効にする
+set t_vb=
+"コマンドラインの高さを1行に
+set cmdheight=1
+"行番号を表示
+set number
+"キーコードはすぐにタイムアウト。マッピングはタイムアウトしない。
+set notimeout ttimeout ttimeoutlen=200
+
+"clipboard onでコンパイルしないと意味がない
+"ヴィジュアルモードで選択したテキストをクリップボードに入れる。
+"set clipboard+=autoselect
+"yankしたテキストを無名レジスタだけではく*レジスタに入れる
+"set clipboard=unnamed
+
+"スペースでインデントする
+set expandtab
+" インデント幅を設定する
+set tabstop=2
+set shiftwidth=2
+
+set encoding=utf-8
+set fileencoding=utf-8
+"set fileencodings=iso-2022-jp,euc-jp,
+
+"80文字で改行する
+set textwidth=80
+set colorcolumn=80
+
+" バックアップ設定
+set backupext=,backup
+set backup
+set backupdir=~/.vim/backup
+set swapfile
+set directory=~/.vim/swap
+
+"タグジャンプのCtrl-]とCtrl-Tをよく使用するが、Ctrl-Tはtmuxにかぶるのでctrl-[に変更
+nnoremap <C-[> :pop<CR>
+
+
+if &compatible
+  set nocompatible
+endif
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+
+call dein#begin(expand('~/.vim/dein'))
+
+call dein#add('Shougo/dein.vim')
+call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+
+call dein#add('Shougo/neocomplete.vim')
+call dein#add('Shougo/neomru.vim')
+call dein#add('Shougo/neosnippet')
+
+call dein#add('scrooloose/nerdtree')
+
+call dein#end()
+
+if dein#check_install()
+  call dein#install()
+endif
+
