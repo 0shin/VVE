@@ -1,0 +1,8 @@
+---
+date: "{{ lookup('pipe', 'date +%Y%m%d') }}"
+
+hostname: 'dockerhost.test'
+ansible_user: vagrant
+login_user: "vve"
+
+
